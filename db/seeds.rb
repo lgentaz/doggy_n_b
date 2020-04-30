@@ -5,3 +5,45 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+require 'faker'
+
+City.destroy_all
+city_array = ["Lyon", "Paris", "Montpellier", "Lille"]
+city_array.each do |c|
+    City.create!(city_name: c)
+end
+
+Dogsitter.destroy_all
+20.times do
+    dogsitter = Dogsitter.create!(
+        full_name: Faker::Name.name,
+        city: City.all.sample
+    )
+end
+
+Dog.destroy_all
+80.times do
+    dog = Dog.create!(
+        doggy_name: Faker::Creature::Dog.name,
+        city: City.all.sample
+    )
+end
+
+Stroll.destroy_all
+160.times do
+    stroll = Stroll.create(date: Faker::Time.forward(days: rand(1..7), period: :day, format: :long), city: City.all.sample)
+    stroll.dogsitter = Dogsitter.where("city_id like ?", "%#{stroll.city_id}%").sample
+    stroll.save
+end
+
+
+Outing.destroy_all
+400.times do
+    outing = Outing.create
+    outing.city = City.all.sample
+    outing.stroll = Stroll.where("city_id like ?", "%#{outing.city_id}%").sample
+    outing.dog = Dog.where("city_id like ?", "%#{outing.city_id}%").sample
+    outing.save
+end
+

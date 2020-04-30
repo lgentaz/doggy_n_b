@@ -1,24 +1,43 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+FreeDoc is a Ruby app.
 
-Things you may want to cover:
+# Versions
+* Ruby version 2.5.1
+* Rails version 5.2.4
 
-* Ruby version
+# Gem
+* table_print: Use "tp" to visualize the information as tables
+* faker: To create a fake database
 
-* System dependencies
+This app helps manage a DB between doctors and patients.
 
-* Configuration
+# Before using 
+Please run "rails db:seed" to refresh DB.
 
-* Database creation
+# DB content
+* 30 dogsitters
+* 120 dogs
+* 150 strolls
+* 400 outings
+* 5 cities
 
-* Database initialization
+# Relation between tables
+* Dogsitter - Strolls :         1 - n
+* Dogs - Strolls :              n - n (creation of Outing as join table)
+* Dogsitter - City :            n - 1
+* Dogs - City :                 n - 1
+* Strolls - City :              n - 1
+Dogs and Dogsitters participating a specific Stroll are from the same city the Stroll takes place in.
 
-* How to run the test suite
+# Run tests
+* $ tp Dogsitter.all
+* $ tp Dog.all
+* $ tp Stroll.all
 
-* Services (job queues, cache servers, search engines, etc.)
+* $ tp a = Dogsitter.find(7)
+* $ tp a.dogs
 
-* Deployment instructions
-
-* ...
+* $ tp d = Dog.find(45)
+* $ tp d.dogsitters
+* $ tp tp d.strolls
