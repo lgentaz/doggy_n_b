@@ -1,6 +1,6 @@
 class City < ApplicationRecord
-    has_many :dogs
-    has_many :dogsitters
-    has_many :strolls
-    has_many :outings
+    has_many :dogs, dependent: :destroy
+    has_many :dogsitters, dependent: :destroy
+    has_many :strolls, dependent: :destroy
+    has_many :outings, dependent: :destroy
 end
