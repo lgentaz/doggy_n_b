@@ -9,13 +9,13 @@
 require 'faker'
 
 City.destroy_all
-city_array = ["Lyon", "Paris", "Montpellier", "Lille"]
+city_array = ["Lyon", "Paris", "Montpellier", "Lille", "Marseille"]
 city_array.each do |c|
     City.create!(city_name: c)
 end
 
 Dogsitter.destroy_all
-20.times do
+30.times do
     dogsitter = Dogsitter.create!(
         full_name: Faker::Name.name,
         city: City.all.sample
@@ -23,7 +23,7 @@ Dogsitter.destroy_all
 end
 
 Dog.destroy_all
-80.times do
+120.times do
     dog = Dog.create!(
         doggy_name: Faker::Creature::Dog.name,
         city: City.all.sample
@@ -31,7 +31,7 @@ Dog.destroy_all
 end
 
 Stroll.destroy_all
-160.times do
+150.times do
     stroll = Stroll.create(date: Faker::Time.forward(days: rand(1..7), period: :day, format: :long), city: City.all.sample)
     stroll.dogsitter = Dogsitter.where("city_id like ?", "%#{stroll.city_id}%").sample
     stroll.save
